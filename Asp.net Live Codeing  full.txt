@@ -1,0 +1,2166 @@
+=======================web congfi========================================
+
+
+
+
+<connectionStrings>
+		<add name="cs" connectionString="Data Source=.;Initial Catalog=jobpotal;Integrated Security=True;" providerName="System.Data.SqlClient"/>
+	</connectionStrings>
+	<appSettings>
+		<add key="UserName" value="Admin"/>
+		<add key="Password" value="123"/>
+		<add key="ValidationSettings:UnobtrusiveValidationMode" value="None" />
+	</appSettings>
+==================log in===================
+<appSettings>
+		<add key="Name" value="Admin"/>
+		<add key="Password" value="123"/>
+		<add key="ValidationSettings:UnobtrusiveValidationMode" value="None" />
+	</appSettings>
+
+================================================== public partial class Contact1 : System.Web.UI.Page======================= save
+    {
+        SqlConnection con;
+        SqlCommand cmd;
+        string str=ConfigurationManager.ConnectionStrings["cs"].ConnectionString;
+}
+==========================================save===========================================<asp:Label ID="lbl" runat="server"  Visible="false"></asp:Label>================
+   try
+            {
+                con = new SqlConnection(str);
+                string query = @"insert into contactnumber values(@Name,@Email,@Sub,@Mas)";
+                cmd = new SqlCommand(query, con);
+                cmd.Parameters.AddWithValue("@Name", txtname.Value.Trim());
+                cmd.Parameters.AddWithValue("@Email", txtemail.Value.Trim());
+                cmd.Parameters.AddWithValue("@Sub", txtsubject.Value.Trim());
+                cmd.Parameters.AddWithValue("@Mas", txtmessage.Value.Trim());
+                con.Open();
+
+                int r=cmd.ExecuteNonQuery();
+                if ( r > 0 )
+                {
+
+                    xxx.Visible = true;
+                    xxx.Text = "Thanks for reaching out will look into your query";
+                    xxx.CssClass = "alert alert-sucess";
+                    Clear();
+
+                }
+
+                else
+                {
+                    xxx.Visible = true;
+
+
+
+                    xxx.Text = "Thanks for reaching right now,pls try after someting ";
+                    xxx.CssClass = "alert alert-danger";
+                }
+
+
+
+
+            }
+
+            catch (Exception ex)
+            {
+
+
+                Response.Write("<script> alert('" + ex.Message + "');<script>");
+
+
+            }
+
+            finally
+            {
+                con.Close();
+            }
+
+        }
+
+        private void Clear()
+        {
+            txtname.Value=string.Empty;
+            txtemail.Value=string.Empty;
+            txtsubject.Value=string.Empty;
+            txtmessage.Value=string.Empty;
+          
+        }
+
+=======================save=================================
+
+public partial class Register : System.Web.UI.Page
+    {
+
+        SqlConnection con;
+        SqlCommand cmd;
+        string str = ConfigurationManager.ConnectionStrings["cs"].ConnectionString;
+
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+
+
+            try
+            {
+                con = new SqlConnection(str);
+                string query = @"insert into register values(@FName,@LName,@Email,@Address,@Password,@Mob,@Country)";
+                cmd = new SqlCommand(query, con);
+                cmd.Parameters.AddWithValue("@FName", txtfirst.Value.Trim());
+                cmd.Parameters.AddWithValue("@LName", txtlast.Value.Trim());
+                cmd.Parameters.AddWithValue("@Email", txtemail.Value.Trim());
+                cmd.Parameters.AddWithValue("@Address", txtaddr.Value.Trim());
+
+                cmd.Parameters.AddWithValue("@Password", txtpass.Value.Trim());
+                cmd.Parameters.AddWithValue("@Mob", txtmob.Value.Trim());
+                cmd.Parameters.AddWithValue("@Country", txtselect.Value.Trim());
+
+
+
+                con.Open();
+
+                int r = cmd.ExecuteNonQuery();
+                if (r > 0)
+                {
+
+                    lbl.Visible = true;
+                    lbl.Text = "Thanks for reaching out will look into your query save!";
+                    lbl.CssClass = "alert alert-sucess";
+                    Clear();
+
+                }
+
+                else
+                {
+                   lbl.Visible = true;
+
+
+
+                    lbl.Text = "Thanks for reaching right now,pls try after someting ";
+                    lbl.CssClass = "alert alert-danger";
+                }
+
+
+
+
+            }
+
+            catch (Exception ex)
+            {
+
+
+                Response.Write("<script> alert('" + ex.Message + "');<script>");
+
+
+            }
+
+            finally
+            {
+                con.Close();
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        }
+
+        private void Clear()
+        {
+           txtfirst.Value=string.Empty;
+            txtlast.Value=string.Empty;
+            txtemail.Value=string.Empty; 
+            txtaddr.Value=string.Empty;
+            txtpass.Value=string.Empty;
+            txtmob.Value=string.Empty;
+            txtselect.Value=string.Empty;   
+
+        }
+    }
+
+===========================================================log in====================================html============
+
+
+
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
+
+
+
+     <form id="form1" >
+        <div>
+
+
+
+
+            <div class="container-fluid">
+        <div class="row" style="height:120px;"></div>
+        <div class="row">
+         <div class="col-md-4"> </div>
+        <div class="col-md-4 bg-light rounded-3">
+            <h1 class="text-success text-center">Login</h1>
+            <form>
+                  <asp:Label ID="lbl" runat="server"  Visible="false"></asp:Label>
+
+
+  <div class="mb-3">
+
+
+    
+    <label for="exampleInputEmail1" class="form-label">Name</label>
+   
+      <asp:TextBox ID="txtuname" runat="server" CssClass="form-control"></asp:TextBox>
+   
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputPassword1" class="form-label">Password</label>
+   
+
+      <asp:TextBox ID="txtpass" runat="server" CssClass="form-control"></asp:TextBox>
+  </div>
+  <div class="mb-3 ">
+      <label id="Errms" class="text-danger" runat="server" ></label>
+      <asp:DropDownList ID="ddlogin" runat="server">
+
+          <asp:ListItem Value="0"> select Login</asp:ListItem>
+
+          <asp:ListItem>Admin</asp:ListItem>
+          <asp:ListItem>User</asp:ListItem>
+      </asp:DropDownList>
+
+
+      <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="userType is rediers"
+          
+       foreColor="Red" Display="Dynamic" SetFocusOnError="true" Font-Size="Small" InitialValue="0" ControlToValidate="ddlogin"  ></asp:RequiredFieldValidator>
+
+  </div>
+              
+
+                 <div class="d-grid">
+
+                     <asp:Button ID="logbtn" runat="server" Text="Login"  Class="btn btn-success btn-block" OnClick="logbtn_Click"  />
+                </div>
+                
+
+  
+                <br/>
+</form>
+
+
+        </div>
+        <div class="col-md-4"> </div>
+
+        </div>
+        
+    </div>
+
+
+
+
+
+        </div>
+    </form>
+
+
+
+
+
+
+
+
+</asp:Content>
+
+
+
+==============Login===========html======End=================
+=================Login====================C#====================
+namespace find_job_protal.user
+{
+    public partial class Login : System.Web.UI.Page
+    {
+
+        SqlConnection con;
+        SqlCommand cmd;
+        SqlDataReader dr;
+        string str = ConfigurationManager.ConnectionStrings["cs"].ConnectionString;
+
+      
+         string UserName, Password = string.Empty;
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void logbtn_Click(object sender, EventArgs e)
+        {
+
+
+
+
+            try
+            {
+
+                if (ddlogin.SelectedValue == "Admin")
+                {
+
+                    UserName = ConfigurationManager.AppSettings["UserName"];
+
+                    Password = ConfigurationManager.AppSettings["Password"];
+
+
+                    if (UserName == txtuname.Text.Trim() &&  Password == txtpass.Text.Trim())
+
+                    {
+
+                        Session["Admin"] = UserName;
+                        Response.Redirect("../Admin/Dasboard.aspx", false);
+
+
+                    }
+                    else
+                    {
+
+                        showErrorMsg("Admin");
+                    }
+                }
+
+
+
+                else
+                {
+
+
+                    con = new SqlConnection(str);
+                    string query = @"select * from  userregister  where UserName =@UserName and Password= @Password";
+                    cmd = new SqlCommand(query, con);
+                    cmd.Parameters.AddWithValue("@UserName", txtuname.Text.Trim());
+
+                    cmd.Parameters.AddWithValue("@Password", txtpass.Text.Trim());
+
+
+
+                    con.Open();
+                    dr = cmd.ExecuteReader();
+
+                    if (dr.Read())
+                    {
+                        Session[" userregister "] = dr["UserName"].ToString();
+                        Session["UserId"] = dr["UserId"].ToString();
+
+
+                        Response.Redirect("defualt.aspx", false);
+                    }
+
+
+
+                    else
+                    {
+                        showErrorMsg("userregister");
+                    }
+                    con.Close();
+
+
+
+
+
+
+                }
+
+
+
+            }
+
+
+            catch (Exception ex)
+            {
+
+                Response.Write("<script> alert('" + ex.Message + "');<script>");
+
+                con.Close();
+
+
+            }
+
+
+
+
+
+
+        }
+
+        private void showErrorMsg(string userType)
+        {
+            lbl.Visible = true;
+            lbl.Text = "<br>" + userType + "</b> credentials are incrorect";
+            lbl.CssClass = "alert alert-danger";
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+    }
+
+
+
+
+=====================Log in and logout================= master page===========
+
+                                    <asp:LinkButton ID="lblregisterOrprofile" runat="server" CssClass="btn head-btn1" OnClick="lblregisterOrprofile_Click" CausesValidation="false"></asp:LinkButton>
+
+                                    <asp:LinkButton ID="lblloginOrlogout" runat="server" CssClass="btn head-btn2" OnClick="lblloginOrlogout_Click" CausesValidation="false"></asp:LinkButton>
+==================C#===============================login logout===================
+
+
+
+ public partial class index : System.Web.UI.MasterPage
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if(Session[" userregister "] != null)
+            {
+                lblregisterOrprofile.Text = "profile";
+                lblloginOrlogout.Text = "Logout";
+            }
+            else
+            {
+                lblregisterOrprofile.Text = "Register";
+                lblloginOrlogout.Text = "Login";
+            }
+        }
+
+        protected void lblregisterOrprofile_Click(object sender, EventArgs e)
+        {
+            if(lblregisterOrprofile.Text =="profile")
+            {
+                Response.Redirect("../user/profile.aspx");
+            }
+            else
+            {
+                Response.Redirect("../user/userregister.aspx");
+            }
+
+        }
+
+        protected void lblloginOrlogout_Click(object sender, EventArgs e)
+        {
+            if (lblloginOrlogout.Text == "Login")
+            {
+                Response.Redirect("../user/Login.aspx");
+            }
+            else
+            {
+                Session.Abandon();
+                Response.Redirect("../user/Login.aspx");
+            }
+
+        }
+    }
+==================================login and logout===============End==================
+
+
+
+
+
+
+
+
+
+
+
+
+
+==================================Admin HtML===========================
+
+<html>
+<head runat="server">
+    <title>Job Portal - Admin Area</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/theme.css">
+
+    <script src="../assets/js/vendor/jquery-1.12.4.min.js"></script>
+    <script src="../assets/js/popper.min.js"></script>
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $(".siderbar_menu li").click(function () {
+                $(".siderbar_menu li").removeClass("active");
+                $(this).addClass("active");
+            });
+
+            $(".hamburger").click(function () {
+                $(".wrapper").addClass("active");
+            });
+
+            $(".close, .bg_shadow").click(function () {
+                $(".wrapper").removeClass("active");
+            });
+        });
+    </script>
+
+    <script>
+        $(function () {
+            // this will get the full URL at the address bar
+            var url = window.location.href;
+
+            // passes on every "a" tag 
+            $("#sub-header a").each(function () {
+                // checks if its the same on the address bar
+                if (url == (this.href)) {
+                    $(this).closest("li").addClass("active");
+                }
+            });
+
+        });
+    </script>
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div class="wrapper">
+            <div class="sidebar">
+                <div class="bg_shadow"></div>
+                <div class="sidebar_inner" id="sub-header">
+                    <div class="close">
+                        <i class="fas fa-times"></i>
+                    </div>
+
+                    <div class="profile_info">
+                        <div class="profile_data">
+                            <p class="name">Admin Area</p>
+                        </div>
+                    </div>
+
+                    <ul class="siderbar_menu">
+                        <li>
+                            <a href="Dashboard.aspx">
+                                <div class="icon"><i class="fas fa-palette"></i></div>
+                                <div class="title">Dashboard</div>
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="NewJob.aspx">
+                                <div class="icon"><i class="fas fa-plus-square"></i></div>
+                                <div class="title">New Job</div>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="JobList.aspx">
+                                <div class="icon"><i class="fas fa-file-alt"></i></div>
+                                <div class="title">Job List</div>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="ViewResume.aspx">
+                                <div class="icon"><i class="fas fa-file-download"></i></div>
+                                <div class="title">View Resume</div>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="ContactList.aspx">
+                                <div class="icon"><i class="fas fa-comment-alt"></i></div>
+                                <div class="title">Contact List</div>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="logout_btn">
+                        <asp:LinkButton ID="btnLogOut" runat="server" CausesValidation="false">Logout</asp:LinkButton>
+                    </div>
+
+                </div>
+            </div>
+            <div class="main_container">
+                <div class="navbar">
+                    <div class="hamburger">
+                        <i class="fas fa-bars"></i>
+                    </div>
+                    <div class="logo">
+                        <label>Online Job Portal</label>
+                    </div>
+                </div>
+
+                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                </asp:ContentPlaceHolder>
+
+            </div>
+        </div>
+    </form>
+</body>
+</html>
+==============================Admin Html End====================
+==========================Admin Style Css start====================
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,600,700|Trade+Winds&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+    text-decoration: none;
+    font-family: 'Montserrat';
+}
+
+body {
+    background: #ffffff;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+.wrapper {
+    display: flex;
+    width: 100%;
+}
+
+.sidebar {
+    position: relative;
+}
+
+    .sidebar .bg_shadow {
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background: #000;
+        z-index: 998;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+    }
+
+.sidebar_inner {
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    background: #7200cf;
+    z-index: 999;
+    transition: all 0.3s ease;
+}
+
+.main_container {
+    margin-left: 250px;
+    width: calc(100% - 250px);
+    transition: all 0.3s ease;
+}
+
+.sidebar_inner .profile_info {
+    padding: 20px;
+    text-align: center;
+}
+
+    .sidebar_inner .profile_info .profile_img {
+        width: 100px;
+        margin: 0 auto 5px;
+    }
+
+        .sidebar_inner .profile_info .profile_img img {
+            width: 100%;
+            display: block;
+        }
+
+    .sidebar_inner .profile_info .profile_data .name {
+        font-size: 18px;
+        color: #fff;
+        margin-bottom: 5px;
+        font-family: 'Trade Winds';
+    }
+
+    .sidebar_inner .profile_info .profile_data span {
+        color: #c4dcff;
+    }
+
+.sidebar_inner .siderbar_menu {
+    height: 500px;
+    overflow: auto;
+}
+
+    .sidebar_inner .siderbar_menu > li > a {
+        padding: 12px 20px;
+        display: flex;
+        align-items: center;
+        position: relative;
+        margin-bottom: 1px;
+        color: #c4dcff;
+    }
+
+        .sidebar_inner .siderbar_menu > li > a .icon {
+            font-size: 25px;
+            margin-right: 15px;
+        }
+
+        .sidebar_inner .siderbar_menu > li.active > a,
+        .sidebar_inner .siderbar_menu > li > a:hover {
+            background: #3d0b66;
+            color: #fff;
+            text-decoration: none !important;
+        }
+
+        .sidebar_inner .siderbar_menu > li > a .arrow {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            transition: all 0.3s ease;
+        }
+
+.sidebar .logout_btn a {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    width: 210px;
+    border: 1px solid #fff;
+    color: #fff;
+    border-radius: 5px;
+    font-weight: 600;
+    padding: 10px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+    .sidebar .logout_btn a:hover {
+        background: #3d0b66;
+        color: #fff;
+        text-decoration: none;
+    }
+
+.sidebar_inner .close {
+    position: absolute;
+    top: 5px;
+    right: 15px;
+    font-size: 25px;
+    color: #fff;
+    cursor: pointer;
+    display: none;
+}
+
+    .sidebar_inner .close:hover,
+    .navbar .hamburger:hover {
+        opacity: 0.7;
+    }
+
+.navbar {
+    background: #fff;
+    height: 50px;
+    width: 100%;
+    box-shadow: 0 3px 5px rgba(0,0,0,0.125);
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+}
+
+    .navbar .hamburger {
+        font-size: 25px;
+        cursor: pointer;
+        margin-right: 20px;
+        color: #3d0b66;
+        display: none;
+    }
+
+    .navbar .logo label {
+        font-family: 'Franklin Gothic Medium';
+        color: #7200cf;
+        font-size: 25px;
+        text-align:center;
+    }
+
+.content {
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+    .content .item {
+        background: #fff;
+        box-shadow: 2px 2px 4px rgba(0,0,0,0.125), -2px -2px 4px rgba(0,0,0,0.125);
+        margin: 10px 5px;
+        width: 31.8%;
+        padding: 20px;
+    }
+
+.accordion {
+    background: #6f6fc7;
+    padding-left: 20px;
+    height: 0px;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+    .accordion li a {
+        display: block;
+        color: #c4dcff;
+        padding: 12px 0;
+        padding-left: 10px;
+    }
+
+    .accordion li:last-child a {
+        border-bottom: 0px;
+    }
+
+    .accordion li a.active {
+        color: #fff;
+        text-decoration: none;
+    }
+
+    .accordion li a:hover {
+        background: #3d3d79;
+        color: #fff;
+    }
+
+.siderbar_menu > li.active .accordion {
+    height: auto;
+}
+
+.siderbar_menu > li.active .arrow {
+    transform: rotate(180deg);
+    transition: all 0.3s ease;
+}
+
+
+@media (max-width: 1024px) {
+    .sidebar_inner {
+        left: -115%;
+        transition: all 0.5s ease;
+    }
+
+    .main_container {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .navbar .hamburger,
+    .sidebar_inner .close {
+        display: block;
+    }
+
+    .content .item {
+        width: 47%;
+    }
+
+    .wrapper.active .sidebar_inner {
+        left: 0;
+        transition: all 0.5s ease;
+    }
+
+    .wrapper.active .sidebar .bg_shadow {
+        visibility: visible;
+        opacity: 0.7;
+    }
+}
+
+@media (max-width: 528px) {
+    .content .item {
+        width: 100%;
+    }
+}
+===========================Admin css End============
+
+=========================================Register==================Html================start=====================
+
+   <section>
+
+        <div class="container pt-50 pb-40 ">
+
+                <div class="row">
+                    <div class="col-12 pb-20">
+                          <asp:Label ID="xxx" runat="server" Visible="false" ></asp:Label>
+                        <h2 class="contact-title text-center" >sing up</h2>
+                    </div>
+                    <div class="col-lg-6 mx-auto">
+                        <form class="form-contact contact_form"  <%--novalidate="novalidate"--%> >
+                            <div class="row">
+
+
+                                <div class="col-12">
+                                    <div class="form-group">
+                   
+                                    </div>
+
+
+
+
+
+
+                                    <div class="col-12">
+
+
+                                        <h6>Login information</h6>
+
+                                    </div>
+
+
+
+
+
+
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>User Name</label>
+                                       
+                                        <asp:TextBox ID="txtUName" runat="server" CssClass="form-control" placeholder="Enter Unique UserName" required></asp:TextBox>
+                                   
+
+                                       
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        
+                                          <label>Password</label>
+                                       
+                                        <asp:TextBox ID="txtpassword" runat="server" CssClass="form-control" ForeColor="Red" placeholder="Enter Unique password" required></asp:TextBox>
+                                   
+                                        
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+
+                                   
+                                          <label>Confirm Password</label>
+                                       
+                                        <asp:TextBox ID="txtconfirmfpass" runat="server" CssClass="form-control" ForeColor="Red" placeholder="Enter confirm password" required></asp:TextBox>
+
+                                        <asp:CompareValidator ID="CompareValidator1" runat="server" 
+                                            ErrorMessage="password & confirm password should be same."
+                                            ControlToCompare="txtpassword" ControlToValidate="txtconfirmfpass" ForeColor="Red"
+                                            Display="Dynamic" SetFocusOnError="true" Font-Size="Small"></asp:CompareValidator>
+
+
+                                       
+                                    </div>
+                                </div>
+
+                                    <div class="col-12"> 
+                                        <h6> Personal  infromation</h6>
+                                    </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                     <label>Full Name</label>
+                                       
+                                        <asp:TextBox ID="txtfulname" runat="server" CssClass="form-control" placeholder="Enter Full Name" required></asp:TextBox>
+
+                                        <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server"
+                                            ErrorMessage="Name must be in characters"  Display="Dynamic"
+                                            SetFocusOnError="true" Font-Size="Small" ForeColor="Red" ValidationExpression="^[a-zA-Z\s]+$" 
+                                            ControlToValidate="txtfulname"></asp:RegularExpressionValidator>
+                                    </div>
+                                </div>
+
+
+                                     <div class="col-12">
+                                    <div class="form-group">
+                                     <label>Address </label>
+                                       
+                                        <asp:TextBox ID="txtaddress" runat="server" CssClass="form-control" placeholder="Enter Address " TextMode="MultiLine" required ></asp:TextBox>
+                                   
+
+                                    </div>
+                                </div>
+
+
+
+
+
+
+
+
+                                           <div class="col-12">
+                                    <div class="form-group">
+                                     <label>Mobile Number </label>
+                                       
+                                        <asp:TextBox ID="txtmobile" runat="server" CssClass="form-control" placeholder="Enter mobile number"  required ></asp:TextBox>
+                                   
+                                         <asp:RegularExpressionValidator ID="RegularExpressionValidator2" runat="server"
+                                            ErrorMessage="Mobile NO.must have 11 digits"  Display="Dynamic"
+                                            SetFocusOnError="true" Font-Size="Small" ForeColor="Red" ValidationExpression="^[0-9]{11}$" 
+                                            ControlToValidate="txtmobile"></asp:RegularExpressionValidator>
+                                    </div>
+                                </div>
+
+
+
+
+                                           <div class="col-12">
+                                    <div class="form-group">
+                                     <label>E-mail </label>
+                                       
+                                        <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control"
+                                            placeholder="Enter your E-mail"  required TextMode="Email"></asp:TextBox>
+
+                                   
+
+                                    </div>
+                                </div>
+
+
+
+
+
+                                           <div class="col-12">
+                                    <div class="form-group">
+                                     <label>Country </label>
+                                       
+                                        <asp:DropDownList ID="ddlcountry" runat="server" DataSourceID="SqlDataSource1" CssClass="form-contact w-100"
+                                            AppendDataBoundItems="true" DataTextField="CountryName" DataValueField="CountryName" >
+                                            <asp:ListItem Value="0">select country</asp:ListItem>
+                                        </asp:DropDownList>
+
+                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server"
+                                            ErrorMessage="country is required" ForeColor="Red" Display="Dynamic" 
+                                            SetFocusOnError="true" Font-Size="Small"   InitialValue="0" ControlToValidate="ddlcountry"></asp:RequiredFieldValidator>
+
+
+                             
+                 
+            </asp:RequiredFieldValidator>
+
+
+
+
+
+
+                                        <asp:SqlDataSource ID="SqlDataSource1" runat="server"
+                                            ConnectionString="<%$ ConnectionStrings:cs %>" SelectCommand="SELECT [CountryName] FROM [Country]"></asp:SqlDataSource>
+
+                                    </div>
+                                </div>
+
+
+                                     
+
+
+
+
+
+
+
+
+                            </div>
+                            <div class="form-group mt-3">
+
+                                  <asp:Button ID="btnregister" runat="server" Text="Register" class="button button-contactForm boxed-btn mr-4 "
+                                      OnClick="btnregister_Click"   />
+                              <%--  <button type="submit" class="button button-contactForm boxed-btn">Send</button>--%>
+                                <span class="clickLink"><a href="../user/login.aspx"> Already Register? Click here.</a></span>
+                            </div>
+                        </form>
+                    </div>
+                    </div>
+
+        </div>
+    </section>
+==================================Register==============Html===============End================
+
+
+======================Register=============C#===================start============Sqlserver Unique================
+
+================sql server
+alter table userregister add unique (UserName)
+
+
+
+==================
+
+
+namespace find_job_protal.user
+{
+    public partial class userregister : System.Web.UI.Page
+    {
+
+        SqlConnection con;
+        SqlCommand cmd;
+        string str = ConfigurationManager.ConnectionStrings["cs"].ConnectionString;
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnregister_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                con = new SqlConnection(str);
+                string query = @"insert into userregister (UserName,Password,Name,Email,Mobile,Address,Country) values
+           (@UserName,@Password,@Name,@Email,@Mobile,@Address,@Country)";
+                cmd = new SqlCommand(query, con);
+                cmd.Parameters.AddWithValue("@UserName", txtUName.Text.Trim());
+                cmd.Parameters.AddWithValue("@Password", txtconfirmfpass.Text.Trim());
+                cmd.Parameters.AddWithValue("@Name", txtfulname.Text.Trim());
+                cmd.Parameters.AddWithValue("@Email", txtEmail.Text.Trim());
+
+                cmd.Parameters.AddWithValue("@Mobile", txtmobile.Text.Trim());
+                cmd.Parameters.AddWithValue("@Address", txtaddress.Text.Trim());
+                cmd.Parameters.AddWithValue("@Country", ddlcountry.SelectedValue);
+
+
+                con.Open();
+
+                int r = cmd.ExecuteNonQuery();
+                if (r > 0)
+                {
+
+                    xxx.Visible = true;
+                    xxx.Text = "Register successfully ";
+                    xxx.CssClass = "alert alert-sucess";
+                    //Clear();
+
+                }
+
+                else
+                {
+                    xxx.Visible = true;
+
+
+
+                    xxx.Text = "Thanks for reaching right now,pls try after someting ";
+                    xxx.CssClass = "alert alert-danger";
+                }
+
+
+            }
+            catch (SqlException ex)
+            {
+              if(ex.Message.Contains("Violation of UNIQUE KEY constraint"))
+                {
+                    xxx.Visible = true;
+
+
+
+                    xxx.Text = "<b>"+txtUName.Text.Trim()+ " </b> UserName Already exist, try new one... ";
+                    xxx.CssClass = "alert alert-danger";
+                }
+                else
+                {
+                    Response.Write("<script> alert('" + ex.Message + "');<script>");
+                }
+            }
+            catch(Exception ex)
+            {
+                Response.Write("<script> alert('" + ex.Message + "');<script>");
+            }
+            finally
+            {
+                con.Close();
+
+
+            }
+        }
+    }
+}
+============================C#===============Register============End================
+
+
+
+
+
+
+
+
+=============================text box desing=========html===========
+
+
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
+
+
+
+
+
+    
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div style="background-image:url('../images/bg.jpg'); height:720px; background-repeat:no-repeat;background-size:cover;background-attachment:fixed; ">
+
+
+        <div class="container pt-4 pb-4">
+
+       //////////     <div>
+
+
+                <asp:Label ID="lblmsg" runat="server" ></asp:Label>
+          //////////////  </div>
+           
+
+
+
+
+
+<div class="btn-toolbar justify-content-between mb-3">
+                <div class="btn-group">
+                      <asp:Label ID="lblmsg" runat="server" Visible="false" ></asp:Label>
+                </div>
+
+
+                <div class="input-input-group h-h-25">
+                    <asp:HyperLink ID="linkBack" runat="server" NavigateUrl="~/Admin/job details.aspx" CssClass="btn btn-secondary" Visible="false">< Back</asp:HyperLink>
+                </div>
+
+
+            </div>
+
+
+
+
+
+
+
+         <h3 class="text-center"><%Response.Write(Session["title"]); %></h3>
+
+             <br />
+            <br />
+            <br />
+            <br />
+         
+
+             <br />
+            <br />
+            <br />
+            <br />
+
+
+             <br />
+            <br />
+            <br />
+            <br />
+             <br />
+
+
+
+                
+           <div class="row mr-lg-5 ml-lg-5 mb-3" >
+
+               <div class="col-md-6 pt-3">
+                   <label for="txtjobtitle" style="font-weight:600"> jod Title</label>
+                   <asp:TextBox ID="txtjobtitle" runat="server" CssClass="form-form-control " placeholder="Ex.web Developer,App developer" required></asp:TextBox>
+               </div>
+
+               
+               <div class="col-md-6 pt-3">
+                   <label for="txtnuberpost" style="font-weight:600">Number of post</label>
+                   <asp:TextBox ID="txtnuberpost" runat="server" CssClass="form-form-control " placeholder="Enter number job position"  required TextMode="Number" >
+
+                   </asp:TextBox>
+               </div>
+
+
+
+
+           </div>
+
+
+
+                       <div class="row mr-lg-5 ml-lg-5 mb-3" >
+
+               <div class="col-md-12 pt-3">
+                   <label for="txtDescription" style="font-weight:600"> Description</label>
+                   <asp:TextBox ID="txtDescription" runat="server" CssClass="form-form-control " placeholder="Enter job Description" TextMode="MultiLine" required Width="869px" ></asp:TextBox>
+               </div>
+
+            
+
+
+
+           </div>
+
+
+
+              <div class="row mr-lg-5 ml-lg-5 mb-3 ">
+
+               <div class="col-md-6 pt-3">
+                   <label for="txteducation" style="font-weight:600">Qualification/Education required</label>
+                   <label for="txteducation" style="font-weight:600">
+                   <asp:TextBox ID="txteducation" runat="server" CssClass="form-form-control " placeholder="Ex.MCA,BTech,BBA,MBA,PHD,DIPLOMA,BSC" required Width="338px" ></asp:TextBox>
+                   </label>
+               </div>
+
+               
+               <div class="col-md-6 pt-3">
+                   <label for="txtexperience" style="font-weight:600">Experience required</label>
+                   <asp:TextBox ID="txtexperience" runat="server" CssClass="form-form-control " placeholder="Ex.1 year,2 year,3 year" required Width="302px"  ></asp:TextBox>
+               </div>
+
+
+
+
+           </div>
+
+
+
+            
+              <div class="row mr-lg-5 ml-lg-5 mb-3 ">
+
+               <div class="col-md-6 pt-3">
+                   <label for="txtSpecialization" style="font-weight:600">Specialization</label>
+                   <label for="txtSpecialization" style="font-weight:600">
+                   <asp:TextBox ID="txtSpecialization" runat="server" CssClass="form-form-control " placeholder="Enter Specialization" required  TextMode="MultiLine" Width="381px"></asp:TextBox>
+                   </label>
+               </div>
+
+               
+               <div class="col-md-6 pt-3">
+                   <label for="txtlastdate" style="font-weight:600">Last date</label>
+                   <label for="txtSpecialization" style="font-weight:600"></label>
+                   <asp:TextBox ID="txtlastdate" runat="server" CssClass="form-form-control " placeholder="Enter Last date to Apply" TextMode="Date" required Width="389px"  ></asp:TextBox>
+               </div>
+
+
+
+
+           </div>
+
+
+            
+              <div class="row mr-lg-5 ml-lg-5 mb-3" >
+
+               <div class="col-md-6 pt-3">
+                   <label for="txtsalary" style="font-weight:600">salary</label>
+                   <asp:TextBox ID="txtsalary" runat="server" CssClass="form-form-control " placeholder="Ex:25k/month.30k/month,40k/month" required Width="424px"  ></asp:TextBox>
+               </div>
+
+               
+               <div class="col-md-6 pt-3">
+                   <label for="ddltobtype" style="font-weight:600">job Type</label>
+
+
+
+
+
+                   <asp:DropDownList ID="ddltobtype" runat="server" CssClass="from-form-control" Width="406px">
+
+                       <asp:ListItem Value="0">select job type</asp:ListItem>
+                       <asp:ListItem>Full Time</asp:ListItem>
+
+                       <asp:ListItem>Part Time</asp:ListItem>
+                       <asp:ListItem>Remote</asp:ListItem>
+                       <asp:ListItem>Freelance</asp:ListItem>
+                   </asp:DropDownList>
+                   <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="JobType is required" 
+                       ForeColor="Red" ControlToValidate="ddltobtype" InitialValue="0" Display="Dynamic" SetFocusOnError="true">
+
+                   </asp:RequiredFieldValidator>
+
+
+               </div>
+
+
+
+
+           </div>
+
+
+
+
+
+
+              <div class="row mr-lg-5 ml-lg-5 mb-3 ">
+
+               <div class="col-md-6 pt-3">
+                   <label for="txtcompany" style="font-weight:600">Company/organaization</label>
+                   <asp:TextBox ID="txtcompany" runat="server" CssClass="form-form-control "  placeholder="Enter Company"            required Width="334px"  ></asp:TextBox>
+
+                   
+
+               </div>
+
+               
+
+                   
+
+
+
+
+
+
+
+
+
+
+              <%-- <div class="col-md-6 pt-3">
+                  <label for="companylogo" style="font-weight:600">Company Logo</label>
+
+                   <asp:FileUpload ID="fucompanylogo" runat="server" CssClass="form-form-control" ToolTip=".jpg,.jpeg,.png extension only" Width="345px"  />
+
+
+
+                   
+                 
+
+               </div>--%>
+
+
+
+
+           </div>
+
+
+
+
+
+
+
+              
+              <div class="row mr-lg-5 ml-lg-5 mb-3" >
+
+               <div class="col-md-6 pt-3">
+                   <label for="txtweb" style="font-weight:600">Website</label>
+                   <asp:TextBox ID="txtweb" runat="server" CssClass="form-form-control " TextMode="Url" placeholder="website" Width="403px"  ></asp:TextBox>
+               </div>
+
+               
+               <div class="col-md-6 pt-3">
+                   <label for="txtemail" style="font-weight:600">Email</label>
+                   <asp:TextBox ID="txtemail" runat="server" CssClass="form-form-control " TextMode="Email" placeholder="EMail" required Width="422px"  ></asp:TextBox>
+               </div>
+
+
+
+
+           </div>
+
+
+
+
+
+
+            
+              <div class="row mr-lg-5 ml-lg-5 mb-3 ">
+
+               <div class="col-md-6 pt-3">
+                   <label for="txtweb" style="font-weight:600">Address</label>
+                   <asp:TextBox ID="txtaddress" runat="server" CssClass="form-form-control " TextMode="MultiLine"  placeholder="Enter you address" Width="405px"  ></asp:TextBox>
+               </div>
+
+               
+               
+
+
+
+
+           </div>
+
+
+
+            
+              <div class="row mr-lg-5 ml-lg-5 mb-3" >
+
+               <div class="col-md-6 pt-3">
+                   <label for="txtcountry" style="font-weight:600">Country</label>
+                      <asp:DropDownList ID="txtcountry" runat="server" CssClass="from-form-control" Width="408px">
+
+                       <asp:ListItem Value="0">select job type</asp:ListItem>
+                       <asp:ListItem>india</asp:ListItem>
+
+                       <asp:ListItem>bangladesh</asp:ListItem>
+                       <asp:ListItem>augtileya</asp:ListItem>
+                       <asp:ListItem>France</asp:ListItem>
+                   </asp:DropDownList>
+                   <asp:RequiredFieldValidator ID="txtna" runat="server" ErrorMessage="Country is required" 
+                       ForeColor="Red" ControlToValidate="txtcountry" InitialValue="0" Display="Dynamic" SetFocusOnError="true">
+
+                   </asp:RequiredFieldValidator>
+                   
+               </div>
+
+               
+               <div class="col-md-6 pt-3">
+                   <label for="txtemail" style="font-weight:600">state</label>
+                   <asp:TextBox ID="txtsate" runat="server" CssClass="form-form-control "  placeholder="sate" required Width="431px"  ></asp:TextBox>
+               </div>
+
+
+
+
+           </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+        <div class="row mr-lg-5 ml-lg-5 mb-3 pt-4">
+
+            <div class="col-md-3 col-md-offset-2 mb-3">
+                <asp:Button ID="btnb" runat="server" Text="Add Job" CssClass="btn btn-primary btn-block" BackColor="#7200cf" OnClick="btnb_Click" />
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+
+</asp:Content>
+===================================Text box End===============
+
+========================show data grid view html====================
+
+
+ <div style="background-image:url('../images/bg.jpg'); height:720px; background-repeat:no-repeat;background-size:cover;background-attachment:fixed; ">
+         <div class="container-fluid pt-4 pb-4">
+               <div>
+
+
+                <asp:Label ID="lblmsg" runat="server" ></asp:Label>
+            </div>
+           
+                <h3 class="text-center">Add job</h3>
+
+
+             <br />
+             <br />
+             <br />
+             <br />
+             <br />
+             <br />
+             <br />
+
+             <div class="row mb-3 pt-sm-3">
+
+                 <div class="col-md-12">
+
+                     <asp:GridView ID="GridView1" runat="server" CssClass="table table-hover table-bordered"
+                         EmptyDateText="No record to display" AutoGenerateColumns="False" AllowPaging="true" PageSize="5"
+                         OnPageIndexChanging="GridView1_PageIndexChanging" 
+                         DataKeyNames="ID" OnRowDeleting="GridView1_RowDeleting" OnRowCommand="GridView1_RowCommand"  >
+                         <Columns>
+                            
+                            
+                            
+                             <asp:BoundField DataField="Sr.No" HeaderText="Sr.No">
+                             <ItemStyle HorizontalAlign="Center" />
+                             </asp:BoundField>
+                            
+                            
+                             <asp:BoundField DataField="title" HeaderText="Title">
+                             <ItemStyle HorizontalAlign="Center" />
+                             </asp:BoundField>
+                              <asp:BoundField DataField="Number" HeaderText="job Number">
+                             <ItemStyle HorizontalAlign="Center" />
+                             </asp:BoundField>
+                            
+                            
+                             <%--<asp:BoundField DataField="des" HeaderText="Descriptions">
+                             <ItemStyle HorizontalAlign="Center" />
+                             </asp:BoundField>--%>
+
+
+                              <%-- <asp:BoundField DataField="ed" HeaderText="Educations">
+                             <ItemStyle HorizontalAlign="Center" />
+                             </asp:BoundField>--%>
+                            
+                            
+                             <asp:BoundField DataField="ex" HeaderText="Experiens">
+                             <ItemStyle HorizontalAlign="Center" />
+                             </asp:BoundField>
+                             <%-- <asp:BoundField DataField="sp" HeaderText="Specialazations">
+                             <ItemStyle HorizontalAlign="Center" />
+                             </asp:BoundField>--%>
+                            
+                            
+                             <asp:BoundField DataField="las" HeaderText="Last Date">
+                             <ItemStyle HorizontalAlign="Center" />
+                             </asp:BoundField>
+
+
+                            <%--   <asp:BoundField DataField="sa" HeaderText="Salary">
+                             <ItemStyle HorizontalAlign="Center" />
+                             </asp:BoundField>--%>
+                            
+                            
+                             <asp:BoundField DataField="jo" HeaderText="Job type">
+                             <ItemStyle HorizontalAlign="Center" />
+                             </asp:BoundField>
+                              <asp:BoundField DataField="cn" HeaderText="company/Organazations">
+                             <ItemStyle HorizontalAlign="Center" />
+                             </asp:BoundField>
+                            
+                            
+                             <%--<asp:BoundField DataField="we" HeaderText="Webside">
+                             <ItemStyle HorizontalAlign="Center" />
+                             </asp:BoundField>
+
+                              <asp:BoundField DataField="em" HeaderText="E-mail">
+                             <ItemStyle HorizontalAlign="Center" />
+                             </asp:BoundField>--%>
+
+                             <%-- <asp:BoundField DataField="ad" HeaderText="Address">
+                             <ItemStyle HorizontalAlign="Center" />
+                             </asp:BoundField>--%>
+
+                              <asp:BoundField DataField="co" HeaderText="Country">
+                             <ItemStyle HorizontalAlign="Center" />
+                             </asp:BoundField>
+                               <asp:BoundField DataField="sate" HeaderText="Sate">
+                             <ItemStyle HorizontalAlign="Center" />
+                             </asp:BoundField>
+
+                             <asp:TemplateField HeaderText="Edit">
+
+                                 <ItemTemplate>
+                                     <asp:LinkButton ID="btnedit" runat="server" CommandName="Editjob" CommandArgument='<%# Eval("ID") %>'>
+                                         <asp:Image ID="img" runat="server" ImageUrl="~/assets/img/logo/select-items-icon.jpg" Height="25px" />
+                                     </asp:LinkButton>
+                                 </ItemTemplate>
+                                 <ItemStyle HorizontalAlign="Center" Width="50px" />
+                             </asp:TemplateField>
+
+
+
+                             <asp:CommandField CausesValidation="false" HeaderText="    Delete" ShowDeleteButton="true"
+                                 DeleteImageUrl="~/assets/img/icon/job-list1.png"  ButtonType="Image" >
+                             
+                                 <ControlStyle Height="25px " Width="25px" />
+                                 <ItemStyle HorizontalAlign="Center" />
+
+                               </asp:CommandField >
+
+                          
+
+
+                         </Columns>
+
+                         <HeaderStyle BackColor="#7200cf" ForeColor="White" />
+
+
+                     </asp:GridView>
+
+
+
+                 </div>
+
+             </div>
+
+
+         </div>
+
+     
+        </div>
+
+
+===============================show data grid view C#==============================Delete========== 
+public partial class job_details : System.Web.UI.Page
+    {
+        SqlConnection con;
+        SqlCommand cmd;
+        string str = ConfigurationManager.ConnectionStrings["cs"].ConnectionString;
+        DataTable dt;
+
+
+        protected void Page_preRender(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            showjob();
+        }
+
+        private void showjob()
+        {
+            string query = string.Empty;
+            con= new SqlConnection(str);
+            query = @"select Row_Number() over(Order by(select 1)) as[Sr.No],ID,title,Number,  ex,  las,  jo, cn,  co,  sate from jons";
+            
+            cmd=new SqlCommand(query, con);
+            SqlDataAdapter sda=new SqlDataAdapter(cmd);
+            dt= new DataTable();
+            sda.Fill(dt);
+            GridView1.DataSource = dt;
+            GridView1.DataBind();
+
+            
+        }
+
+        protected void GridView1_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            GridView1.PageIndex = e.NewPageIndex;
+        }
+
+        protected void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+
+
+
+            try
+            {
+                GridViewRow row=GridView1.Rows[e.RowIndex];
+                int ID=Convert.ToInt32(GridView1.DataKeys[e.RowIndex].Values[0]);
+                con= new SqlConnection(str); 
+                cmd=new SqlCommand("Delete from jons where ID=@ID",con);
+
+                cmd.Parameters.AddWithValue("@ID",ID);
+                con.Open();
+                int r=cmd.ExecuteNonQuery();
+                if (r > 0)
+                {
+                    lblmsg.Text = "job deleted successfull";
+                    lblmsg.CssClass = "alert alert-sucess";
+                }
+                else
+                {
+                    lblmsg.Text = "cannot deleted successfull";
+                    lblmsg.CssClass = "alert alert-danger";
+                }
+                GridView1.EditIndex = -1;
+                con.Close();
+                showjob();
+            }
+
+
+            catch (Exception ex)
+            {
+                Response.Write("<script> alert('" + ex.Message + "');<script>");
+
+            }
+
+
+
+
+
+
+
+
+
+
+        }
+
+        protected void GridView1_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "Editjob")
+            {
+                Response.Redirect("New job.aspx?id=" + e.CommandArgument.ToString());
+            }
+        }
+    }
+=========================datagridview show ==============delete==========End==========================
+===============================save button=====update======================
+
+
+
+
+
+
+  public partial class New_job : System.Web.UI.Page
+    {
+        SqlConnection con;
+        SqlCommand cmd;
+        string str = ConfigurationManager.ConnectionStrings["cs"].ConnectionString;
+
+        string query;
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            //if(Session["Admin"]==null)
+            //{
+            //Response.Redirect("../user/login-1.aspx");
+            //}
+Session["title"] = "add  job";
+            if (!IsPostBack)
+            {
+                fillData();
+            }
+
+
+        }
+
+        private void fillData()
+        {
+            if (Request.QueryString["id"] != null)
+            {
+                con = new SqlConnection(str);
+                query = "select * from jons where ID='" + Request.QueryString["id"] + "'";
+                cmd = new SqlCommand(query, con);
+                con.Open();
+                SqlDataReader sdr = cmd.ExecuteReader();
+                if (sdr.HasRows)
+                {
+                    while (sdr.Read())
+                    {
+                        txtjobtitle.Text = sdr["title"].ToString();
+
+                        txtnuberpost.Text = sdr["Number"].ToString();
+
+
+                        txtDescription.Text = sdr["des"].ToString();
+
+                        txteducation.Text = sdr["ed"].ToString();
+
+                        txtexperience.Text = sdr["ex"].ToString();
+
+                        txtSpecialization.Text = sdr["sp"].ToString();
+
+
+
+                        txtlastdate.Text = sdr["las"].ToString();
+
+
+                        txtsalary.Text = sdr["sa"].ToString();
+
+                        ddltobtype.Text = sdr["jo"].ToString();
+
+                        txtcompany.Text = sdr["cn"].ToString();
+
+                        txtweb.Text = sdr["we"].ToString();
+
+
+
+
+
+
+
+
+                        txtemail.Text = sdr["em"].ToString();
+
+                        txtaddress.Text = sdr["ad"].ToString();
+
+                        txtcountry.Text = sdr["co"].ToString();
+
+                        txtsate.Text = sdr["sate"].ToString();
+
+
+                        btnb.Text = "update";
+
+
+                            linkBack.Visible = true;
+
+                        Session["title"] = "Edit job";
+
+
+
+
+
+
+
+
+                    }
+                }
+
+
+                else
+                {
+                    lblmsg.Text = "job not found...";
+                    lblmsg.CssClass = "alert alert-danger";
+                }
+                sdr.Close();
+                con.Close();
+            }
+        }
+
+        protected void btnb_Click(object sender, EventArgs e)
+        {
+
+
+
+
+
+            try
+            {
+
+
+
+
+
+                //string concatQuery, imagePath = string.Empty;
+                //   bool isValidToExecute = false;
+
+
+
+
+
+
+                con = new SqlConnection(str);
+
+
+
+                if(Request.QueryString["id"] != null)
+                {
+
+
+
+
+
+
+
+
+
+                    
+
+
+
+
+                    string query = @"Update  jons set title=@title,Number=@Number,des= @des,ed= @ed,ex= @ex,sp=@sp, las=@las,sa= @sa,jo= @jo,cn= @cn,we= @we,em= @em,ad= @ad,co= @co, sate= @sate where ID=@id";
+
+
+
+
+                    cmd = new SqlCommand(query, con);
+                    cmd.Parameters.AddWithValue("@title", txtjobtitle.Text.Trim());
+                    cmd.Parameters.AddWithValue("@Number", txtnuberpost.Text.Trim());
+                    cmd.Parameters.AddWithValue("@des", txtDescription.Text.Trim());
+                    cmd.Parameters.AddWithValue("@ed", txteducation.Text.Trim());
+                    cmd.Parameters.AddWithValue("@ex", txtexperience.Text.Trim());
+                    cmd.Parameters.AddWithValue("@sp", txtSpecialization.Text.Trim());
+                    cmd.Parameters.AddWithValue("@las", txtlastdate.Text.Trim());
+                    cmd.Parameters.AddWithValue("@sa", txtsalary.Text.Trim());
+                    cmd.Parameters.AddWithValue("@jo", ddltobtype.Text.Trim());
+                    cmd.Parameters.AddWithValue("@cn", txtcompany.Text.Trim());
+                   
+
+                    cmd.Parameters.AddWithValue("@we", txtweb.Text.Trim());
+                    cmd.Parameters.AddWithValue("@em", txtemail.Text.Trim());
+                    cmd.Parameters.AddWithValue("@ad", txtaddress.Text.Trim());
+                    cmd.Parameters.AddWithValue("@co", txtcountry.SelectedValue);
+                    cmd.Parameters.AddWithValue("@sate", txtsate.Text.Trim());
+                    cmd.Parameters.AddWithValue("@id", Request.QueryString["id"].ToString());
+                   
+
+
+                    con.Open();
+
+                    int r = cmd.ExecuteNonQuery();
+                    if (r > 0)
+                    {
+
+                        lblmsg.Visible = true;
+                        lblmsg.Text = "Thanks for reaching out will look into your query update!";
+                        lblmsg.CssClass = "alert alert-sucess";
+
+
+                    }
+
+                    else
+                    {
+                        lblmsg.Visible = true;
+
+
+
+                        lblmsg.Text = "Thanks for reaching right now,pls try after someting ";
+                        lblmsg.CssClass = "alert alert-danger";
+                    }
+
+
+
+
+
+
+
+
+
+                }
+
+                else
+                {
+
+                    string query = @"Insert into jons values(@title,@Number, @des, @ed, @ex, @sp, @las, @sa, @jo, @cn, @we, @em, @ad, @co,  @sate)";
+                  
+                    cmd = new SqlCommand(query, con);
+                    cmd.Parameters.AddWithValue("@title", txtjobtitle.Text.Trim());
+                    cmd.Parameters.AddWithValue("@Number", txtnuberpost.Text.Trim());
+                    cmd.Parameters.AddWithValue("@des", txtDescription.Text.Trim());
+                    cmd.Parameters.AddWithValue("@ed", txteducation.Text.Trim());
+                    cmd.Parameters.AddWithValue("@ex", txtexperience.Text.Trim());
+                    cmd.Parameters.AddWithValue("@sp", txtSpecialization.Text.Trim());
+                    cmd.Parameters.AddWithValue("@las", txtlastdate.Text.Trim());
+                    cmd.Parameters.AddWithValue("@sa", txtsalary.Text.Trim());
+                    cmd.Parameters.AddWithValue("@jo", ddltobtype.Text.Trim());
+                    cmd.Parameters.AddWithValue("@cn", txtcompany.Text.Trim());
+                    //cmd.Parameters.AddWithValue("@Companyimage", txtjobtitle.Text.Trim());
+
+                    cmd.Parameters.AddWithValue("@we", txtweb.Text.Trim());
+                    cmd.Parameters.AddWithValue("@em", txtemail.Text.Trim());
+                    cmd.Parameters.AddWithValue("@ad", txtaddress.Text.Trim());
+                    cmd.Parameters.AddWithValue("@co", txtcountry.SelectedValue);
+                    cmd.Parameters.AddWithValue("@sate", txtsate.Text.Trim());
+                 
+                    //cmd.Parameters.AddWithValue("@createDate", time.ToString("yyy-MM-dd-HH:mm:ss"));
+
+
+                    con.Open();
+
+                    int r = cmd.ExecuteNonQuery();
+                    if (r > 0)
+                    {
+
+                        lblmsg.Visible = true;
+                        lblmsg.Text = "Thanks for reaching out will look into your query save!";
+                        lblmsg.CssClass = "alert alert-sucess";
+
+
+                    }
+
+                    else
+                    {
+                        lblmsg.Visible = true;
+
+
+
+                        lblmsg.Text = "Thanks for reaching right now,pls try after someting ";
+                        lblmsg.CssClass = "alert alert-danger";
+                    }
+                }
+
+
+
+               
+
+
+
+            }
+
+            catch (Exception ex)
+            {
+
+
+                Response.Write("<script> alert('" + ex.Message + "');<script>");
+
+
+            }
+
+            finally
+            {
+                con.Close();
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        }
+
+        private bool isvalidExtension(string fileName)
+        {
+            bool isValid = false;
+            string[] fileExtension = { ".jpg", ".png", ".jpeg" };
+            for (int i = 0; i <= fileExtension.Length - i; i++)
+            {
+                if (fileName.Contains(fileExtension[i]))
+                {
+                    isValid = true;
+                    break;
+                }
+            }
+            return isValid;
+
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
